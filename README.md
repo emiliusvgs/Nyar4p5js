@@ -5,8 +5,6 @@
 # Nyar4p5js
 Nyartoolkit (realidad aumentada) que funciona ahora en p5js (realidad aumentada web)
 Se lee: Nyar-for-p5js
-# nyar4p5js 
-
 **Realidad aumentada con marcadores cuadrados para p5.js**, con una API que continúa la de
 [NyAR4psg](https://github.com/nyatla/NyARToolkit-for-Processing) (NyARToolkit for Processing).
 
@@ -20,6 +18,26 @@ Processing y a toda una generación de artistas y creadores. Este proyecto lleva
 - Por debajo, la búsqueda de cuadrados y el cálculo de la pose los hace **ARToolKit5 compilado a WebAssembly**.
 
 > Todavía no incluye NFT (imágenes naturales) ni las PsARPlayCard.
+
+## Importante: trabaja en el p5.js Web Editor
+
+La forma recomendada de usar nyar4p5js es el **[p5.js Web Editor](https://editor.p5js.org)**: no instalas
+nada, pruebas al instante en la laptop y en el celular, y lo que funciona ahí funciona igual cuando lo exportas
+a tu servidor.
+
+<div align="center">
+  <img width="700" alt="Sketch de nyar4p5js en el p5.js Web Editor: index.html, nyar4p5.js y sketch.js" src="docs/p5-editor.png" />
+</div>
+
+1. Crea un sketch nuevo y **sube `nyar4p5.js`** (Sketch Files → `+`). Junto con `index.html` y `sketch.js`,
+   son los únicos tres archivos que necesitas.
+2. En `index.html`, antes de `sketch.js`, agrega las líneas de ARToolKit y de `nyar4p5.js`, como en la imagen.
+3. Pega el `sketch.js` del ejemplo que quieras y dale **Play**.
+4. Para probar en el celular: **Share → Fullscreen** y abre ese enlace en el celular (usa la cámara trasera).
+5. Para publicarlo: **File → Download** y sube la carpeta a tu servidor (HTTPS).
+
+Cuando actualices la librería, cambia **los dos archivos a la vez** (`nyar4p5.js` y `sketch.js`): mezclar
+versiones es la causa más común de errores. Más detalles en [En el p5.js Web Editor](#en-el-p5js-web-editor).
 
 ---
 
