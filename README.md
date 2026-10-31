@@ -23,11 +23,12 @@ Processing y a toda una generación de artistas y creadores. Este proyecto lleva
 
 La forma recomendada de usar nyar4p5js es el **[p5.js Web Editor](https://editor.p5js.org)**: no instalas
 nada, pruebas al instante en la laptop y en el celular, y lo que funciona ahí funciona igual cuando lo exportas
-a tu servidor.
+a tu servidor. DEMO: https://editor.p5js.org/emiliusvgs/sketches/OWuMlg6e8
 
 <div align="center">
-  <img width="700" alt="Sketch de nyar4p5js en el p5.js Web Editor: index.html, nyar4p5.js y sketch.js" src="docs/p5-editor.png" />
+  <img width="1028" height="752" alt="{980866F4-9A39-41D2-BE3D-A4BDD12D6807}" src="https://github.com/user-attachments/assets/46b0ce28-733a-4821-811d-a9d249010aeb" />
 </div>
+
 
 1. Crea un sketch nuevo y **sube `nyar4p5.js`** (Sketch Files → `+`). Junto con `index.html` y `sketch.js`,
    son los únicos tres archivos que necesitas.
