@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>nyar4p5 · patternMaker</title>
+  <!-- p5 1.x (para p5 2.x cambia por: https://cdn.jsdelivr.net/npm/p5@2.3.4/lib/p5.min.js) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.13/p5.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@ar-js-org/artoolkit5-js@0.3.2/dist/ARToolkit.js"></script>
+  <script src="../../nyar4p5.js"></script>
+  <style>
+    body { margin: 0; background: #111; color: #eee; font: 14px system-ui, sans-serif; }
+    #stage { position: relative; display: inline-block; line-height: 0; }
+    #hud { padding: 8px 12px; }
+    .row { display: flex; align-items: center; gap: 8px; font-weight: 600; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: #888; flex: none; }
+    .dot.ok { background: #2ecc71; } .dot.search { background: #f1c40f; } .dot.error { background: #e74c3c; }
+    .grid { display: grid; grid-template-columns: auto auto; gap: 2px 16px; margin-top: 6px; width: max-content; }
+    .keys { opacity: .7; margin-top: 6px; }
+    main { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; }
+    aside { padding: 8px 12px; width: 300px; display: grid; gap: 10px; }
+    aside h2 { font-size: 15px; margin: 6px 0 0; }
+    .pv { display: flex; gap: 10px; }
+    .pv figure { margin: 0; text-align: center; font-size: 12px; opacity: .85; }
+    #pvPatt { image-rendering: pixelated; }
+    .pv canvas { width: 128px; height: 128px; background: #333; border: 1px solid #444; display: block; }
+    button, select, input { font: inherit; }
+    button { padding: 6px 10px; border-radius: 6px; border: 1px solid #555; background: #222; color: #eee; cursor: pointer; }
+    button:disabled { opacity: .4; cursor: default; }
+    #info { font-size: 12px; opacity: .8; min-height: 2.4em; }
+    ul { margin: 0; padding-left: 0; list-style: none; }
+    li { display: flex; align-items: center; gap: 6px; }
+    .sw { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+    body.drag { outline: 3px dashed #f1c40f; outline-offset: -6px; }
+  </style>
+</head>
+<body>
+  <main>
+    <div>
+      <div id="stage"></div>
+      <div id="hud"></div>
+    </div>
+    <aside>
+      <h2>1 · Desde una imagen</h2>
+      <div>Arrastra un PNG/JPG aquí o <input type="file" id="file" accept="image/*"></div>
+      <label>Borde: <select id="edge">
+        <option value="auto">automático</option>
+        <option value="0">la imagen es solo el dibujo interior</option>
+        <option value="25">marcador completo, borde 25%</option>
+      </select></label>
+      <h2>2 · Desde la cámara</h2>
+      <div><button id="capture">Capturar cuadrado amarillo (espacio)</button></div>
+      <label>Ancho impreso: <input id="size" type="number" value="80" min="10" style="width:5em"> mm</label>
+      <h2>Resultado</h2>
+      <div class="pv">
+        <figure><canvas id="pvInner" width="256" height="256"></canvas>dibujo interior</figure>
+        <figure><canvas id="pvPatt" width="16" height="16"></canvas>.patt (16×16)</figure>
+      </div>
+      <div id="info">Aún no hay patrón.</div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap">
+        <button id="dlPatt" disabled>Descargar .patt</button>
+        <button id="dlPng" disabled>Descargar marcador PNG</button>
+      </div>
+      <h2>Marcadores registrados</h2>
+      <ul id="list"></ul>
+    </aside>
+  </main>
+  <script src="sketch.js"></script>
+</body>
+</html>

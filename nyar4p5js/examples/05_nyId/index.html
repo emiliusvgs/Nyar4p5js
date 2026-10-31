@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>nyar4p5 · nyId</title>
+  <!-- p5 1.x (para p5 2.x cambia por: https://cdn.jsdelivr.net/npm/p5@2.3.4/lib/p5.min.js) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.13/p5.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@ar-js-org/artoolkit5-js@0.3.2/dist/ARToolkit.js"></script>
+  <script src="../../nyar4p5.js"></script>
+  <style>
+    body { margin: 0; background: #111; color: #eee; font: 14px system-ui, sans-serif; }
+    #stage { position: relative; display: inline-block; line-height: 0; }
+    #hud { padding: 8px 12px; }
+    .row { display: flex; align-items: center; gap: 8px; font-weight: 600; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: #888; flex: none; }
+    .dot.ok { background: #2ecc71; } .dot.search { background: #f1c40f; } .dot.error { background: #e74c3c; }
+    .grid { display: grid; grid-template-columns: auto auto; gap: 2px 16px; margin-top: 6px; width: max-content; }
+    .keys { opacity: .7; margin-top: 6px; }
+    .tag { position: absolute; left: 0; top: 0; line-height: 1; padding: 4px 8px; border-radius: 6px;
+           background: rgba(0,0,0,.75); color: #fff; font-weight: 700; pointer-events: none; white-space: nowrap; }
+    main { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; }
+    aside { padding: 8px 12px; width: 280px; display: grid; gap: 10px; }
+    aside h2 { font-size: 15px; margin: 6px 0 0; }
+    #pv { width: 256px; height: 256px; background: #fff; display: block; }
+    button, input { font: inherit; }
+    button { padding: 6px 10px; border-radius: 6px; border: 1px solid #555; background: #222; color: #eee; cursor: pointer; }
+    #info { font-size: 12px; opacity: .8; }
+  </style>
+</head>
+<body>
+  <main>
+    <div>
+      <div id="stage"></div>
+      <div id="hud"></div>
+    </div>
+    <aside>
+      <h2>Generar un NyId para imprimir</h2>
+      <label>ID: <input id="nyid" type="number" value="0" min="0" max="33554431" style="width:9em"></label>
+      <canvas id="pv" width="512" height="512"></canvas>
+      <div id="info"></div>
+      <div><button id="dl">Descargar PNG</button></div>
+      <div id="info2" style="font-size:12px;opacity:.7">0–511: modelo 2 (el clásico). Desde 512: modelo 3.
+        Mide el ancho en mm incluyendo el borde negro.</div>
+    </aside>
+  </main>
+  <script src="sketch.js"></script>
+</body>
+</html>

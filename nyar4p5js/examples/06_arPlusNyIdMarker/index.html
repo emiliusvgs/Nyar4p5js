@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>nyar4p5 · arPlusNyIdMarker</title>
+  <!-- p5 1.x (para p5 2.x cambia por: https://cdn.jsdelivr.net/npm/p5@2.3.4/lib/p5.min.js) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.13/p5.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@ar-js-org/artoolkit5-js@0.3.2/dist/ARToolkit.js"></script>
+  <script src="../../nyar4p5.js"></script>
+  <style>
+    body { margin: 0; background: #111; color: #eee; font: 14px system-ui, sans-serif; }
+    #stage { position: relative; display: inline-block; line-height: 0; }
+    #hud { padding: 8px 12px; }
+    .row { display: flex; align-items: center; gap: 8px; font-weight: 600; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: #888; flex: none; }
+    .dot.ok { background: #2ecc71; } .dot.search { background: #f1c40f; } .dot.error { background: #e74c3c; }
+    .grid { display: grid; grid-template-columns: auto auto; gap: 2px 16px; margin-top: 6px; width: max-content; }
+    .keys { opacity: .7; margin-top: 6px; }
+
+  </style>
+</head>
+<body>
+  <div id="stage"></div>
+  <div id="hud"></div>
+  <script src="sketch.js"></script>
+</body>
+</html>
