@@ -35,10 +35,9 @@ Processing y a toda una generación de artistas y creadores. Este proyecto lleva
 let cam, ar;
 
 function setup() {
-  createCanvas(640, 480, WEBGL);
-  cam = createCapture({ video: { width: 640, height: 480 }, audio: false });
-  cam.hide();
-  ar = new NyAR.MultiMarker(this, 640, 480);
+  NyAR.createARCanvas(this);    // lienzo WEBGL: vertical en el celular, horizontal en la laptop
+  cam = NyAR.createCamera(this); // cámara trasera en el celular, webcam en la laptop
+  ar = new NyAR.MultiMarker(this, width, height);
   ar.addARMarker('hiro', 80);   // marcador 0: Hiro (incluido en la librería), 80 mm de lado
 }
 
@@ -57,7 +56,10 @@ function draw() {
 }
 ```
 
-Funciona igual con ** 1.x y 2.x** (probado con 1.11.13 y 2.3.4). Para p5 2.x cambia el primer `<script>` por
+Pensado primero para el **celular**: abre la cámara trasera, pone el lienzo en vertical y lo ajusta a la
+pantalla. En la laptop usa la webcam y el lienzo horizontal de siempre. Ver [Celular primero](#celular-primero).
+
+Funciona igual con **p5 1.x y 2.x** (probado con 1.11.13 y 2.3.4). Para p5 2.x cambia el primer `<script>` por
 `https://cdn.jsdelivr.net/npm/p5@2.3.4/lib/p5.min.js`.
 
 ## Ejemplos
@@ -72,7 +74,7 @@ Funciona igual con ** 1.x y 2.x** (probado con 1.11.13 y 2.3.4). Para p5 2.x cam
 | `examples/04_patternMaker` | **Conversor imagen → .patt**: arrastra una imagen o captura un cuadrado desde la cámara, pruébalo en vivo y descarga el `.patt` y el marcador imprimible |
 | `examples/05_nyId` | **Marcadores NyId**: NyId 0 y 1 con objetos propios, cualquier otro ID de 2 a 511 con su número encima, y generador de NyId imprimibles |
 | `examples/06_arPlusNyIdMarker` | Port directo del ejemplo de nyatla del mismo nombre: Hiro, Kanji, NyId 0 y NyId 1 a la vez |
-| `examples/07_cohete` | **El cubo de 2009 convertido en cohete**: formas básicas de p5.js con caras blancas y aristas amarillas; despega con la barra espaciadora |
+| `examples/07_cohete` | **El cubo de 2009 convertido en cohete**: formas básicas de p5.js con caras blancas y aristas amarillas. Solo con taps: el 1º transforma el cubo en cohete, el 2º lo hace despegar |
 
 **Cómo abrirlos**
 
@@ -219,17 +221,41 @@ Lo que conviene saber:
 
 El editor solo deja subir ciertos tipos de archivo (código, imágenes, sonido, fuentes, texto…). Por eso la
 librería no necesita ningún archivo extra: los datos de cámara y los marcadores Hiro y Kanji vienen dentro de
-`nyar4p5.js`. En `examples/00_p5editor`:
+`nyar4p5.js`.
 
-1. Crea un sketch nuevo en el editor y reemplaza `index.html` y `sketch.js` por los de esa carpeta.
+**Todos los ejemplos funcionan igual en el editor.** Cada carpeta de `examples/` trae sus tres archivos
+(`index.html`, `sketch.js` y `nyar4p5.js`) y el `index.html` es el mismo que usa el editor; los paneles y
+estilos de cada ejemplo se crean desde `sketch.js`. Para usar uno:
+
+1. Crea un sketch nuevo en el editor y reemplaza `index.html` y `sketch.js` por los de la carpeta del ejemplo.
 2. Sube `nyar4p5.js` (es un `.js`, el editor lo acepta).
-3. Opcional: sube tu marcador como imagen (`mi-marcador.png`). Puede ser el que genera el ejemplo 04.
+3. Opcional (`00_p5editor`): sube tu marcador como imagen (`mi-marcador.png`). Puede ser el que genera el ejemplo 04.
 4. Dale play y acepta la cámara.
 
+Si te quedas con el `index.html` del editor, basta con agregarle estas dos líneas antes de `sketch.js`:
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/@ar-js-org/artoolkit5-js@0.3.2/dist/ARToolkit.js"></script>
+<script src="nyar4p5.js"></script>
+```
+
 ```js
-ar = new NyAR.MultiMarker(this, 640, 480);
+ar = new NyAR.MultiMarker(this, width, height);
 ar.addARMarker('hiro', 80);
 ```
+
+Para probarlo en el celular, abre el sketch desde el celular con el enlace de **Share → Fullscreen** del editor
+(es HTTPS, que la cámara necesita).
+
+### Exportar y subir a tu servidor
+
+Lo que funciona en el editor funciona igual fuera de él: **File → Download** baja un zip con `index.html`,
+`sketch.js`, `nyar4p5.js` y tus imágenes. Sube esa carpeta tal cual a tu servidor (o sube directamente una
+carpeta de `examples/`). Dos condiciones:
+
+- El servidor tiene que ser **HTTPS**: sin eso el celular no da acceso a la cámara.
+- Si actualizas `nyar4p5.js`, recarga sin caché (o cambia el nombre a `nyar4p5.js?v=2` en `index.html`),
+  porque el navegador puede seguir usando la versión anterior.
 
 ### Convertir tu imagen en marcador (también en el editor)
 
@@ -289,10 +315,32 @@ if (ar.isExist(ANY)) console.log('veo el NyId', ar.getNyId(ANY));
   (por ejemplo `'hiro'` y un marcador generado de `hiro.png`), solo uno de los dos se detectará.
 - Si hay dos copias impresas del mismo marcador, se usa la de mayor confianza.
 
+## Celular primero
+
+```js
+NyAR.createARCanvas(this);            // 480×640 en un celular en vertical, 640×480 en el resto
+cam = NyAR.createCamera(this);        // cámara trasera; en la laptop, la webcam
+ar = new NyAR.MultiMarker(this, width, height);
+```
+
+| Función | Qué hace |
+|---|---|
+| `NyAR.createCamera(p, [{ facing }])` | Abre la cámara trasera. En el celular la pide de forma estricta (`facingMode: { exact }`); si el celular no lo admite o igual entrega la frontal, busca la trasera por su nombre entre las cámaras. En la laptop usa la webcam. `facing: 'user'` pide la frontal. En el celular no fuerza 640×480 (recortaría o deformaría la imagen vertical) |
+| `NyAR.createARCanvas(p, [opciones])` | Crea el lienzo WEBGL del tamaño correcto, lo centra y lo escala a la pantalla sin deformarlo. Funciona con el `index.html` que trae el p5.js Web Editor (agrega la etiqueta `viewport` si falta). `fit: 'cover'` llena toda la pantalla recortando bordes; `maxScale: 1` evita agrandarlo; `parent` lo coloca en un elemento. Desactiva el zoom y el desplazamiento al tocar |
+| `NyAR.isMobile()` | `true` en celulares y tablets |
+| `NyAR.size()` | `[480, 640]` en un celular en vertical, `[640, 480]` en el resto |
+
+Con el lienzo en vertical, la librería gira el parámetro de cámara (pensado para 640×480 horizontal) para que la
+pose 3D no se deforme. Los ejemplos se controlan con **taps** (`touchStarted` / `mousePressed`); las teclas que
+quedan son extras de diagnóstico para la laptop.
+
+Si posicionas elementos HTML sobre el lienzo con `marker2Screen`, multiplica por
+`drawingContext.canvas.clientWidth / width`: el lienzo puede verse escalado en pantalla.
+
 ## Espejo para webcam frontal
 
 ```js
-ar = new NyAR.MultiMarker(this, 640, 480, { mirror: true });
+ar = new NyAR.MultiMarker(this, width, height, { mirror: true });
 // o en cualquier momento: ar.setMirror(true) / ar.toggleMirror()
 ```
 
@@ -305,7 +353,8 @@ No uses la opción `{ flipped: true }` de `createCapture`: nyar4p5 lee el video 
 
 - Unidades en milímetros (se admiten anchos con decimales). Origen en el centro del marcador.
 - Valores por defecto distintos a NyAR4psg: `lostDelay` 3 (allá 10) y `minConfidence` 0.5 (allá 0.51).
-- La imagen de proceso es 4:3. En un celular en vertical, la cámara se recorta al centro.
+- La imagen de proceso es 4:3 (3:4 en un celular en vertical). Si la cámara entrega otra proporción, se recorta al centro.
+- Si giras el celular con el sketch abierto, recarga la página: el tamaño se decide al empezar.
 - En modo global de p5 2.x evita nombres de funciones que choquen con p5 (`log`, `random`…).
 - Cámara en el celular: requiere HTTPS.
 
@@ -314,11 +363,86 @@ No uses la opción `{ flipped: true }` de `createCapture`: nyar4p5 lee el video 
 ```
 nyar4p5.js          librería (un solo archivo, sin dependencias aparte de p5 y ARToolkit.js)
 data/               marcadores para imprimir: hiro.png, kanji.png, nyid-*.png
-examples/           00_p5editor … 07_cohete
+examples/           00_p5editor … 07_cohete (cada carpeta lista para el editor o un servidor)
 standalone/         los mismos ejemplos en un solo .html cada uno
-tools/              build-standalone.py (solo para mantener la librería: arma standalone/; no convierte imágenes)
+tools/              build-standalone.py (solo para mantener la librería: copia nyar4p5.js a cada ejemplo y arma standalone/)
 LICENSE             GNU LGPL v3
 ```
+
+## Cambios en v0.3.8
+
+- Probado como **exportación del p5.js Web Editor** (su `index.html` con p5 2.x, `style.css` y `<main>`): los 9
+  ejemplos funcionan en laptop y celular, igual que los standalone.
+- Un sketch viejo que encadena `.parent('stage')` sin tener ese elemento ya no se rompe (`appendChild` de null):
+  la librería avisa en la consola y deja el lienzo centrado.
+
+## Cambios en v0.3.7
+
+- Cada ejemplo es autocontenido y listo para exportar: su carpeta trae `index.html` (el mismo del p5.js Web
+  Editor), `sketch.js` y `nyar4p5.js`. Los paneles, el HUD y los estilos se crean desde `sketch.js`, así que
+  funcionan en el editor, al descargarlos con File → Download y al subirlos a un servidor.
+- Antes, los ejemplos 01–06 dependían de elementos (`#stage`, `#hud`) de su propio `index.html` y fallaban con
+  `Cannot read properties of null (reading 'appendChild')` si se usaban con otro `index.html`.
+
+## Cambios en v0.3.6
+
+- El celular abría la cámara frontal: `createCamera` ahora pide la trasera de forma estricta y, si el celular
+  igual entrega la frontal, cambia a la trasera buscándola por su nombre.
+- `07_cohete` funciona con el `index.html` que trae el p5.js Web Editor: ya no necesita `#stage` ni `#hud`
+  (antes daba `Cannot read properties of null (reading 'appendChild')`).
+- `createARCanvas` centra el lienzo por su cuenta, agrega la etiqueta `viewport` si falta y, si el contenedor
+  indicado no existe, avisa y sigue.
+
+## Cambios en v0.3.5
+
+- **Celular primero**: `NyAR.createCamera()` abre la cámara trasera del celular (en la laptop, la webcam) y
+  `NyAR.createARCanvas()` crea el lienzo en vertical en el celular y lo ajusta a la pantalla. Todos los ejemplos
+  los usan.
+- Lienzo vertical (480×640) con la pose correcta: el parámetro de cámara se gira automáticamente.
+- `07_cohete` sin teclas: un tap transforma el cubo en cohete (con animación), otro tap lo hace despegar y al
+  salir de cuadro vuelve el cubo. El vuelo va por tiempo, igual de rápido en cualquier celular.
+- `03_mirror`: arranca con la cámara trasera en el celular (sin espejo) y con la webcam en la laptop (con espejo);
+  un tap cambia de cámara.
+- Las etiquetas HTML de `02` y `05` siguen al marcador aunque el lienzo esté escalado.
+
+## Cambios en v0.3.4
+
+- Nuevo ejemplo `07_cohete`: el cubo de 2009 convertido en cohete hecho con formas básicas de p5.js, con caras
+  blancas y aristas amarillas; despega con la barra espaciadora (la tecla C muestra el cubo original).
+
+## Cambios en v0.3.3
+
+- Más simple: ya no hacen falta `camera_para.dat` ni `patt.hiro`/`patt.kanji`. Los datos de cámara y los
+  marcadores Hiro y Kanji vienen dentro de la librería: `new NyAR.MultiMarker(this, 640, 480)` y
+  `addARMarker('hiro', 80)`. Todos los ejemplos usan esta forma, y funciona en el p5.js Web Editor
+  (nuevo ejemplo `00_p5editor`).
+- `NyAR.saveMarkerImage(img, nombre)`: de cualquier imagen al marcador imprimible en una línea; nuevo ejemplo
+  `00_p5editor_tu_imagen` para hacerlo en el p5.js Web Editor.
+- Conversor de imágenes: refuerzo automático de contraste y diagnóstico (`makePattern.lastInfo`,
+  `comparePatterns`); el ejemplo 04 avisa si una imagen no servirá o se parece a otra.
+- Corregido: `makeMarkerImage`, `makeNyIdMarkerImage` y `pattToImage` fallaban en modo instancia de p5.
+
+## Cambios en v0.3
+
+- **Marcadores NyId** (modelos 2 y 3) con el lector portado de NyARToolkit: `addNyIdMarker(id, mm)`,
+  `addNyIdMarker(desde, hasta, mm)`, `getNyId`, generador `makeNyIdMarkerImage`, ejemplos 05 y 06.
+- `getMarkerVertex2D` devuelve las esquinas desde la superior izquierda del marcador (como NyAR4psg) y
+  `pickupMarkerImage` sale derecha con cualquier orientación (en v0.2 dependía de la orientación).
+- Pose más estable: si el seguimiento continuo diverge tras un salto brusco, se recalcula desde cero.
+- Anchos de marcador con decimales.
+- Más nombres de NyAR4psg: `isExistMarker`, `getMatrix`, `getCurrentThreshold`.
+- Licencia LGPLv3.
+
+## Cambios en v0.2 (desde el spike v0.1)
+
+- Varios marcadores a la vez, con eventos `found`/`lost`, `lostDelay`, `getExistMarkers`, posición y distancia.
+- Conversor imagen → `.patt` integrado (`makePattern`, `addARMarker` con imágenes, captura desde la cámara,
+  vista previa, descarga y marcador imprimible).
+- Modo espejo para webcam frontal.
+- Umbral automático (`otsu`, `adaptive`…), `beginSurface`, `marker2Screen`, `screen2MarkerCoordSystem`.
+- Nombres de NyAR4psg donde corresponde (`setARPerspective`, `getLife`, `getLostCount`, `setConfidenceThreshold`,
+  `setLostDelay`, `pickupMarkerImage`).
+
 ---
 
 ## Créditos
@@ -346,4 +470,4 @@ LICENSE             GNU LGPL v3
 nyar4p5 se distribuye bajo la **GNU Lesser General Public License v3** (archivo `LICENSE`), la misma de
 NyARToolkit y de ARToolKit5, porque incluye código portado de NyARToolkit.
 
-nyar4p5js es un proyecto de EMILIUSVGS / Laboratorio del Futuro.
+nyar4p5 es un proyecto de EMILIUSVGS / Laboratorio del Futuro.
