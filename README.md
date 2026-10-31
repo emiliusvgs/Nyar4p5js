@@ -74,6 +74,7 @@ function draw() {
   }
 }
 ```
+<img width="1440" height="1080" alt="nyar4p5js" src="https://github.com/user-attachments/assets/766d6585-1f6e-4956-b2fb-2e6e397dd303" />
 
 Pensado primero para el **celular**: abre la cámara trasera, pone el lienzo en vertical y lo ajusta a la
 pantalla. En la laptop usa la webcam y el lienzo horizontal de siempre. Ver [Celular primero](#celular-primero).
