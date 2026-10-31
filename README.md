@@ -414,7 +414,7 @@ LICENSE             GNU LGPL v3
 
 ## Licencia
 
-nyar4p5 se distribuye bajo la **GNU Lesser General Public License v3** (archivo `LICENSE`), la misma de
+nyar4p5js se distribuye bajo la **GNU Lesser General Public License v3** (archivo `LICENSE`), la misma de
 NyARToolkit y de ARToolKit5, porque incluye código portado de NyARToolkit.
 
-nyar4p5 es un proyecto de EMILIUSVGS / Laboratorio del Futuro.
+nyar4p5js es un proyecto de EMILIUSVGS
