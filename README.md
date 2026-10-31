@@ -5,7 +5,7 @@
 # Nyar4p5js
 Nyartoolkit (realidad aumentada) que funciona ahora en p5js (realidad aumentada web)
 Se lee: Nyar-for-p5js
-# nyar4p5js v0.3.8
+# nyar4p5js 
 
 **Realidad aumentada con marcadores cuadrados para p5.js**, con una API que continúa la de
 [NyAR4psg](https://github.com/nyatla/NyARToolkit-for-Processing) (NyARToolkit for Processing).
