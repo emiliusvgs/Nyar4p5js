@@ -1,4 +1,4 @@
-<img width="2048" height="2048" alt="nyar4p5js" src="https://github.com/user-attachments/assets/81142a0c-2b13-46c9-9921-115c09ce8b79" />
+<img width="1024" height="1024" alt="nyar4p5js" src="https://github.com/user-attachments/assets/81142a0c-2b13-46c9-9921-115c09ce8b79" />
 
 
 # Nyar4p5js
@@ -318,45 +318,6 @@ standalone/         los mismos ejemplos en un solo .html cada uno
 tools/              build-standalone.py (solo para mantener la librería: arma standalone/; no convierte imágenes)
 LICENSE             GNU LGPL v3
 ```
-
-## Cambios en v0.3.4
-
-- Nuevo ejemplo `07_cohete`: el cubo de 2009 convertido en cohete hecho con formas básicas de p5.js, con caras
-  blancas y aristas amarillas; despega con la barra espaciadora (la tecla C muestra el cubo original).
-
-## Cambios en v0.3.3
-
-- Más simple: ya no hacen falta `camera_para.dat` ni `patt.hiro`/`patt.kanji`. Los datos de cámara y los
-  marcadores Hiro y Kanji vienen dentro de la librería: `new NyAR.MultiMarker(this, 640, 480)` y
-  `addARMarker('hiro', 80)`. Todos los ejemplos usan esta forma, y funciona en el p5.js Web Editor
-  (nuevo ejemplo `00_p5editor`).
-- `NyAR.saveMarkerImage(img, nombre)`: de cualquier imagen al marcador imprimible en una línea; nuevo ejemplo
-  `00_p5editor_tu_imagen` para hacerlo en el p5.js Web Editor.
-- Conversor de imágenes: refuerzo automático de contraste y diagnóstico (`makePattern.lastInfo`,
-  `comparePatterns`); el ejemplo 04 avisa si una imagen no servirá o se parece a otra.
-- Corregido: `makeMarkerImage`, `makeNyIdMarkerImage` y `pattToImage` fallaban en modo instancia de p5.
-
-## Cambios en v0.3
-
-- **Marcadores NyId** (modelos 2 y 3) con el lector portado de NyARToolkit: `addNyIdMarker(id, mm)`,
-  `addNyIdMarker(desde, hasta, mm)`, `getNyId`, generador `makeNyIdMarkerImage`, ejemplos 05 y 06.
-- `getMarkerVertex2D` devuelve las esquinas desde la superior izquierda del marcador (como NyAR4psg) y
-  `pickupMarkerImage` sale derecha con cualquier orientación (en v0.2 dependía de la orientación).
-- Pose más estable: si el seguimiento continuo diverge tras un salto brusco, se recalcula desde cero.
-- Anchos de marcador con decimales.
-- Más nombres de NyAR4psg: `isExistMarker`, `getMatrix`, `getCurrentThreshold`.
-- Licencia LGPLv3.
-
-## Cambios en v0.2 (desde el spike v0.1)
-
-- Varios marcadores a la vez, con eventos `found`/`lost`, `lostDelay`, `getExistMarkers`, posición y distancia.
-- Conversor imagen → `.patt` integrado (`makePattern`, `addARMarker` con imágenes, captura desde la cámara,
-  vista previa, descarga y marcador imprimible).
-- Modo espejo para webcam frontal.
-- Umbral automático (`otsu`, `adaptive`…), `beginSurface`, `marker2Screen`, `screen2MarkerCoordSystem`.
-- Nombres de NyAR4psg donde corresponde (`setARPerspective`, `getLife`, `getLostCount`, `setConfidenceThreshold`,
-  `setLostDelay`, `pickupMarkerImage`).
-
 ---
 
 ## Créditos
