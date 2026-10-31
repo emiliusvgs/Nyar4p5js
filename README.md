@@ -1,5 +1,9 @@
+<img width="2048" height="2048" alt="nyar4p5js" src="https://github.com/user-attachments/assets/81142a0c-2b13-46c9-9921-115c09ce8b79" />
+
+
 # Nyar4p5js
-Nyartoolkit (realidad aumentada para processing) que funciona ahora en p5js (realidad aumentada web)
+Nyartoolkit (realidad aumentada) que funciona ahora en p5js (realidad aumentada web)
+Se lee: Nyar-for-p5js
 # nyar4p5js v0.3.4
 
 **Realidad aumentada con marcadores cuadrados para p5.js**, con una API que continúa la de
