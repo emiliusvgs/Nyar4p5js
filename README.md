@@ -41,6 +41,9 @@ Cuando actualices la librería, cambia **los dos archivos a la vez** (`nyar4p5.j
 versiones es la causa más común de errores. Más detalles en [En el p5.js Web Editor](#en-el-p5js-web-editor).
 
 ---
+### TUTORIAL
+
+[![TUTORIAL](https://img.youtube.com/vi/373RJQ-1e64/maxresdefault.jpg)](https://youtu.be/373RJQ-1e64 "Ver TUTORIAL en YouTube")
 
 ## Inicio rápido
 
